@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "AOframework"
+version = "0.1.0"
+description = "Web Automation Testing Framework With Selenium"
+authors = ["AntonMelentiev <info@AntonMelentiev.com>"]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+allure-pytest = "^2.9.43"
+pytest = "^6.2.4"
+selenium = "^3.141.0"
+webdriver-manager = "^3.4.2"
+mongoengine = "^0.23.1"
+
+
+[tool.poetry.dev-dependencies]
+black = "^21.5b1"
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]

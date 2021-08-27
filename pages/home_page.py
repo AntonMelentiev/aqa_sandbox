@@ -1,0 +1,37 @@
+import allure
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support.wait import WebDriverWait
+
+from constants import TIMEOUT
+from config import BASE_URL
+from pages.base_page import BasePage
+from pages.components.header import Header
+
+
+class HomePage(BasePage):
+    _url = BASE_URL
+
+    def __init__(self, driver: webdriver, header: Header):
+        super().__init__(driver=driver, header=header)
+        self._lazy_init_complete = False
+
+    def _lazy_init(self):
+        if not self._lazy_init_complete:
+            self.header._lazy_init()
+            self._game_list = self._driver.find_element_by_id("game_list")
+            self._lazy_init_complete = True
+
+    @allure.step("open_home_page")
+    def open(self):
+        self._driver.get(self._url)
+        WebDriverWait(driver=self._driver, timeout=TIMEOUT).until(
+            expected_conditions.visibility_of_element_located((By.ID, "game_list"))
+        )
+        # init elements to be used
+        self._lazy_init()
+
+    # @allure.step
+    # def get_text_after_search(self):
+    #     return self._driver.find_element_by_name("q").get_attribute("value")
