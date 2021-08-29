@@ -18,6 +18,7 @@ def test_login__correct_user__user_logged_in():
 
     assert sorted(expected_response_keys) == sorted(resp_keys)
     assert resp_data["username"] == username
+    assert resp_data["team"] is None
 
 
 @pytest.mark.parametrize(
