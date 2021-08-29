@@ -1,13 +1,17 @@
 import pytest
-
+import requests
 from selenium.common.exceptions import TimeoutException
 
-from config import BASE_URL
+from config import BASE_API_URL, BASE_URL
 
 
 def test_login_from_home__correct_user__user_logged_in(driver, header, home_page):
     username = "test"
     password = "Test123!"
+    requests.post(
+        url=f"{BASE_API_URL}/sign_up",
+        json={"email": "test@test.test", "username": username, "password": password}
+    )
 
     home_page.open()
     header.login(username=username, password=password)
