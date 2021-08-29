@@ -27,11 +27,7 @@ class HomePage(BasePage):
     def open(self):
         self._driver.get(self._url)
         WebDriverWait(driver=self._driver, timeout=TIMEOUT).until(
-            expected_conditions.visibility_of_element_located((By.ID, "game_list"))
+            expected_conditions.presence_of_element_located((By.ID, "game_list"))
         )
         # init elements to be used
         self._lazy_init()
-
-    # @allure.step
-    # def get_text_after_search(self):
-    #     return self._driver.find_element_by_name("q").get_attribute("value")
