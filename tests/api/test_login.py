@@ -1,3 +1,5 @@
+from http import HTTPStatus
+
 import pytest
 import requests
 
@@ -13,9 +15,9 @@ def test_login__correct_user__user_logged_in():
         url=f"{BASE_API_URL}/login",
         json={"username": username, "password": password},
     )
+
     resp_data = response.json()
     resp_keys = resp_data.keys()
-
     assert sorted(expected_response_keys) == sorted(resp_keys)
     assert resp_data["username"] == username
     assert resp_data["team"] is None
@@ -41,4 +43,5 @@ def test_login__incorrect_user__user_failed_to_login(login, pwd):
     )
 
     resp_data = response.json()
+    assert response.status_code == HTTPStatus.FORBIDDEN
     assert resp_data == {"error": "Wrong username or password!"}
