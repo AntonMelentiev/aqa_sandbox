@@ -10,6 +10,10 @@ def test_login__correct_user__user_logged_in():
     username = "test"
     password = "Test123!"
     expected_response_keys = ["team", "token", "username"]
+    requests.post(
+        url=f"{BASE_API_URL}/sign_up",
+        json={"email": "test@test.test", "username": username, "password": password}
+    )
 
     response = requests.post(
         url=f"{BASE_API_URL}/login",
