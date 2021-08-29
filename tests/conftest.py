@@ -10,7 +10,7 @@ from utils import get_screenshot_name
 
 # See http://doc.pytest.org/en/latest/example/simple.html#making-test-result-information-available-in-fixtures
 @pytest.hookimpl(tryfirst=True, hookwrapper=True)
-def pytest_runtest_makereport(item, call):  # pylint: disable=unused-argument
+def pytest_runtest_makereport(item, call):
     # Execute all other hooks to obtain the report object
     outcome = yield
     rep = outcome.get_result()
