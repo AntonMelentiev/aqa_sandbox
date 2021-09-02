@@ -9,22 +9,21 @@ from config import BASE_API_URL
 def test_login__correct_user__user_logged_in():
     username = "test"
     password = "Test123!"
-    expected_response_keys = ["team", "token", "username"]
+    expected_response_keys = ["roles", "token_web", "username"]
     requests.post(
         url=f"{BASE_API_URL}/sign_up",
         json={"email": "test@test.test", "username": username, "password": password}
     )
 
     response = requests.post(
-        url=f"{BASE_API_URL}/login",
+        url=f"{BASE_API_URL}/login_web",
         json={"username": username, "password": password},
     )
 
     resp_data = response.json()
-    resp_keys = resp_data.keys()
+    resp_keys = list(resp_data.keys())
     assert sorted(expected_response_keys) == sorted(resp_keys)
     assert resp_data["username"] == username
-    assert resp_data["team"] is None
 
 
 @pytest.mark.parametrize(
@@ -42,7 +41,7 @@ def test_login__correct_user__user_logged_in():
 )
 def test_login__incorrect_user__user_failed_to_login(login, pwd):
     response = requests.post(
-        url=f"{BASE_API_URL}/login",
+        url=f"{BASE_API_URL}/login_web",
         json={"username": login, "password": pwd},
     )
 
