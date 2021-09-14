@@ -9,7 +9,6 @@ from config import BASE_API_URL
 def test_login__correct_user__user_logged_in():
     username = "test"
     password = "Test123!"
-    expected_response_keys = ["roles", "token_web", "username"]
     requests.post(
         url=f"{BASE_API_URL}/sign_up",
         json={"email": "test@test.test", "username": username, "password": password}
@@ -21,9 +20,9 @@ def test_login__correct_user__user_logged_in():
     )
 
     resp_data = response.json()
-    resp_keys = list(resp_data.keys())
-    assert sorted(expected_response_keys) == sorted(resp_keys)
-    assert resp_data["username"] == username
+    token_web = resp_data.pop("token_web", None)
+    assert token_web is not None, "No token_web in response"
+    assert resp_data == {"username": username, "roles": []}
 
 
 @pytest.mark.parametrize(
