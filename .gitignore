@@ -1,0 +1,6 @@
+# environment
+.venv
+.idea
+
+# allure report files
+allure_report
