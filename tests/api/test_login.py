@@ -6,23 +6,16 @@ import requests
 from config import BASE_API_URL
 
 
-def test_login__correct_user__user_logged_in():
-    username = "test"
-    password = "Test123!"
-    requests.post(
-        url=f"{BASE_API_URL}/sign_up",
-        json={"email": "test@test.test", "username": username, "password": password}
-    )
-
+def test_login__correct_user__user_logged_in(test_user):
     response = requests.post(
         url=f"{BASE_API_URL}/login_web",
-        json={"username": username, "password": password},
+        json={"username": test_user["username"], "password": test_user["password"]},
     )
 
     resp_data = response.json()
     token_web = resp_data.pop("token_web", None)
     assert token_web is not None, "No token_web in response"
-    assert resp_data == {"username": username, "roles": []}
+    assert resp_data == {"username": test_user["username"], "roles": []}
 
 
 @pytest.mark.parametrize(

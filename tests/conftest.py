@@ -1,8 +1,12 @@
+from http import HTTPStatus
+
 import allure
 import pytest
+import requests
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
+from config import BASE_API_URL
 from pages.header import HeaderLoggedOut, HeaderLoggedIn, HeaderLoggedInAdmin
 from pages.home_page import HomePage
 from utils import get_screenshot_name
@@ -57,3 +61,40 @@ def header_logged_in_admin(driver) -> HeaderLoggedInAdmin:
 @pytest.fixture
 def home_page(driver) -> HomePage:
     yield HomePage(driver=driver)
+
+
+@pytest.fixture
+def test_user():
+    username = "test"
+    password = "Test123!"
+    resp = requests.post(
+        url=f"{BASE_API_URL}/sign_up", json={"email": "test@test.test", "username": username, "password": password}
+    )
+
+    if resp.status_code != HTTPStatus.OK:
+        assert False, "Cant create test user"
+
+    yield {"username": username, "password": password}
+
+    requests.post(url=f"{BASE_API_URL}/debug/remove_user", json={"username": username})
+
+
+@pytest.fixture
+def test_admin():
+    username = "admin"
+    password = "Admin123!"
+    resp1 = requests.post(
+        url=f"{BASE_API_URL}/sign_up", json={"email": "admin@test.test", "username": username, "password": password}
+    )
+
+    resp2 = requests.post(
+        url=f"{BASE_API_URL}/debug/update_user_to_admin",
+        json={"username": username},
+    )
+
+    if resp1.status_code != HTTPStatus.OK or resp2.status_code != HTTPStatus.OK:
+        assert False, "Cant create test admin user"
+
+    yield {"username": username, "password": password}
+
+    requests.post(url=f"{BASE_API_URL}/debug/remove_user", json={"username": username})

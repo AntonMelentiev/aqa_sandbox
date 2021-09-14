@@ -1,23 +1,17 @@
 import pytest
-import requests
 from selenium.common.exceptions import TimeoutException
 
-from config import BASE_API_URL, BASE_URL
+from config import BASE_URL
 
 
-def test_login_from_home__correct_user__user_logged_in(driver, header_logged_out, header_logged_in, home_page):
-    username = "test"
-    password = "Test123!"
-    requests.post(
-        url=f"{BASE_API_URL}/sign_up",
-        json={"email": "test@test.test", "username": username, "password": password}
-    )
-
+def test_login_from_home__correct_user__user_logged_in(
+    driver, header_logged_out, header_logged_in, home_page, test_user
+):
     home_page.open()
-    header_logged_out.login(username=username, password=password)
+    header_logged_out.login(username=test_user["username"], password=test_user["password"])
 
     header_logged_in._init_elements()
-    assert header_logged_in._user_dropdown.text == username
+    assert header_logged_in._user_dropdown.text == test_user["username"]
     assert driver.current_url == BASE_URL
 
 
@@ -39,5 +33,3 @@ def test_login_from_home__incorrect_user__user_failed_to_login(header_logged_out
 
     with pytest.raises(TimeoutException):
         header_logged_out.login(username=login, password=pwd, timeout=0.5)
-
-
