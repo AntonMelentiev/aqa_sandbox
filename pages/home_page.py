@@ -7,19 +7,17 @@ from selenium.webdriver.support.wait import WebDriverWait
 from constants import TIMEOUT
 from config import BASE_URL
 from pages.base_page import BasePage
-from pages.components.header import Header
 
 
 class HomePage(BasePage):
     _url = BASE_URL
 
-    def __init__(self, driver: webdriver, header: Header):
-        super().__init__(driver=driver, header=header)
+    def __init__(self, driver: webdriver):
+        super().__init__(driver=driver)
         self._lazy_init_complete = False
 
     def _lazy_init(self):
         if not self._lazy_init_complete:
-            self.header._lazy_init()
             self._game_list = self._driver.find_element_by_id("game_list")
             self._lazy_init_complete = True
 

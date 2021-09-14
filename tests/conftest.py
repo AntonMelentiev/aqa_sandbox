@@ -3,7 +3,7 @@ import pytest
 from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
-from pages.components.header import Header
+from pages.header import HeaderLoggedOut, HeaderLoggedIn, HeaderLoggedInAdmin
 from pages.home_page import HomePage
 from utils import get_screenshot_name
 
@@ -40,10 +40,20 @@ def driver(request):
 
 
 @pytest.fixture
-def header(driver):
-    yield Header(driver=driver)
+def header_logged_out(driver) -> HeaderLoggedOut:
+    yield HeaderLoggedOut(driver=driver)
 
 
 @pytest.fixture
-def home_page(driver, header):
-    yield HomePage(driver=driver, header=header)
+def header_logged_in(driver) -> HeaderLoggedIn:
+    yield HeaderLoggedIn(driver=driver)
+
+
+@pytest.fixture
+def header_logged_in_admin(driver) -> HeaderLoggedInAdmin:
+    yield HeaderLoggedInAdmin(driver=driver)
+
+
+@pytest.fixture
+def home_page(driver) -> HomePage:
+    yield HomePage(driver=driver)

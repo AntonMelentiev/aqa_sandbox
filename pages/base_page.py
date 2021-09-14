@@ -1,12 +1,9 @@
 from selenium.webdriver.remote.webdriver import WebDriver
 
-from pages.components.header import Header
-
 
 class BasePage:
-    def __init__(self, driver: WebDriver, header: Header):
+    def __init__(self, driver: WebDriver):
         self._driver = driver
-        self.header = header
 
     @property
     def _url(self):
