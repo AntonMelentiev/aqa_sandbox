@@ -12,6 +12,7 @@ def test_login__correct_user__user_logged_in(test_user):
         json={"username": test_user["username"], "password": test_user["password"]},
     )
 
+    assert response.status_code == HTTPStatus.OK
     resp_data = response.json()
     token_web = resp_data.pop("token_web", None)
     assert token_web is not None, "No token_web in response"
