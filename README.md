@@ -35,13 +35,11 @@ Sorry, but you have to install environment manually =,(
 
 In the command line `cd` to the project folder.
 
-> `python3 -m venv .venv` - to create virtual environment
-> 
 > `python3 -m venv .venv` - to create virtual environment 
 >
-> `.\venv\Scripts\activate` - to activate virtual environment
+> `.\venv\Scripts\activate.bat` - to activate virtual environment
 >
-> `pip install poetry` - to install python package manager
+> `pip3 install poetry` - to install python package manager
 >
 > `poetry install` - to install all the dependencies.
 
