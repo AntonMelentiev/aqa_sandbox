@@ -7,7 +7,6 @@ from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
 
 from config import BASE_API_URL
-from pages.header import HeaderLoggedOut, HeaderLoggedIn, HeaderLoggedInAdmin
 from pages.home_page import HomePage
 from utils import get_screenshot_name
 
@@ -41,21 +40,6 @@ def driver(request):
             )
     finally:
         driver.quit()
-
-
-@pytest.fixture
-def header_logged_out(driver) -> HeaderLoggedOut:
-    yield HeaderLoggedOut(driver=driver)
-
-
-@pytest.fixture
-def header_logged_in(driver) -> HeaderLoggedIn:
-    yield HeaderLoggedIn(driver=driver)
-
-
-@pytest.fixture
-def header_logged_in_admin(driver) -> HeaderLoggedInAdmin:
-    yield HeaderLoggedInAdmin(driver=driver)
 
 
 @pytest.fixture

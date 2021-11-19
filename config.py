@@ -1,7 +1,7 @@
 import os
 
 BASE_URL = "http://31.178.216.240:8855/"
-BASE_API_URL = f"{BASE_URL}/api/v1"
+BASE_API_URL = f"{BASE_URL}api/v1"
 
 
 class DBInfo:
