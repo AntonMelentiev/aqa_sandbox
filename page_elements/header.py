@@ -22,10 +22,7 @@ class Header:
         )
 
     @allure.step
-    def login(self, username: str, password: str, timeout: Union[float, int] = None):
-        if timeout is None:
-            timeout = TIMEOUT
-
+    def login(self, username: str, password: str, timeout: Union[float, int] = TIMEOUT):
         self.open_login_dropdown()
         username_input = self._driver.find_element_by_id("username_input")
         password_input = self._driver.find_element_by_id("password_input")
