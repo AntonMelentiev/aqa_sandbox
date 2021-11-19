@@ -21,4 +21,3 @@ class HomePage(BasePage):
         WebDriverWait(driver=self._driver, timeout=TIMEOUT).until(
             expected_conditions.presence_of_element_located((By.ID, "game_list"))
         )
-        # init elements to be used
