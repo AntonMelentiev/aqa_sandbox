@@ -77,7 +77,7 @@ def test_admin():
     )
 
     if resp1.status_code != HTTPStatus.OK or resp2.status_code != HTTPStatus.OK:
-        assert False, "Cant create test admin user"
+        assert False, "Can't create test admin user"
 
     yield {"username": username, "password": password}
 
