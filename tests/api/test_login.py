@@ -20,7 +20,7 @@ def test_login__correct_user__user_logged_in(test_user):
 
 
 @pytest.mark.parametrize(
-    argnames=("login", "pwd"),
+    argnames=("test_username", "test_password"),
     argvalues=(
         ("test", ""),
         ("test", "wrong_pass"),
@@ -32,10 +32,10 @@ def test_login__correct_user__user_logged_in(test_user):
         "wrong user",
     ),
 )
-def test_login__incorrect_user__user_failed_to_login(login, pwd):
+def test_login__incorrect_user__user_failed_to_login(test_username, test_password):
     response = requests.post(
         url=f"{BASE_API_URL}/login_web",
-        json={"username": login, "password": pwd},
+        json={"username": test_username, "password": test_password},
     )
 
     resp_data = response.json()
