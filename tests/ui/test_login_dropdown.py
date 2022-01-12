@@ -26,8 +26,11 @@ def test_login_from_home__correct_user__user_logged_in(driver, home_page, test_u
         "wrong user",
     ),
 )
-def test_login_from_home__incorrect_user__user_failed_to_login(home_page, test_username, test_password):
+def test_login_from_home__incorrect_user__user_failed_to_login(driver, home_page, test_username, test_password):
     home_page.open()
 
     with pytest.raises(TimeoutException):
         home_page.header.login(username=test_username, password=test_password, timeout=0.5)
+
+    err_msg = driver.find_element_by_xpath(xpath='//*[@id="basic-navbar-nav"]/div[2]/div/div/div/div[1]')
+    assert err_msg.text == "Wrong username or password!"
